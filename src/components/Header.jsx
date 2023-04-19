@@ -9,7 +9,7 @@ import video__3 from "../assets/videos/video__3.mp4";
 import video__4 from "../assets/videos/video__4.mp4";
 import video__5 from "../assets/videos/video__5.mp4";
 
-function Header() {
+function Header({ isLoaded, setIsLoaded }) {
   const videoArr = [video__1, video__2, video__3, video__4, video__5];
   const socials = [
     [<BsLinkedin />, "https://www.linkedin.com/in/djuraleksandar/"],
@@ -53,6 +53,9 @@ function Header() {
         {videoArr.map((videoSrc, i) => {
           return (
             <video
+              onLoad={() => {
+                i === 4 && setIsLoaded(true);
+              }}
               className={`header__video video__${i} ${i === 0 && "active"}`}
               src={videoSrc}
               autoPlay
