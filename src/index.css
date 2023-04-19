@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Resets and general styles */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    list-style: none;
+    text-decoration: none;
+
+    box-sizing: border-box;
+  }
+  img {
+    max-width: 100%;
+    display: inline-block;
+  }
+
+  body {
+    /* background-color: rgb(226, 221, 221); */
+    background: url("./assets/imgs/background.jpg");
+    object-fit: cover;
+    font-family: "Montserrat", sans-serif;
+    color: #ffff;
+  }
+
+  /* Video class */
+  .header__video {
+    z-index: 0;
+    position: absolute;
+    inset: 0;
+    width: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+  .header__video.active {
+    width: 100%;
+  }
+  /* Slider buttons */
+  .slider__button.active {
+    background-color: #cddc39;
+  }
+
+  /* Header txt */
+  .header__text.active {
+    display: block;
+  }
+
+  /* Button */
+  .btn {
+    padding: 0.1rem 0.4rem;
+
+    background-color: #cddc39;
+    border-radius: 8px;
+    color: black;
+    font-weight: 600;
+  }
+  /* Button click and hover effects class */
+  .button__effects {
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  .button__effects:hover {
+    transform: scale(1.1);
+  }
+  .button__effects:active {
+    transform: scale(0.9);
+  }
+
+  /* Navigation list mobile screens */
+  .nav__mobile {
+    width: 100%;
+    height: 100vh;
+
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(1, 1, 1, 0.5);
+  }
+
+  /* Styling nav links hover*/
+  .nav__link::before {
+    content: "";
+    position: absolute;
+    background-color: black;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    transition: 300ms ease-in-out all;
+  }
+
+  .nav__link:hover::before {
+    width: 100%;
+  }
+
+  /* CARDS */
+  .info__card {
+    perspective: 150rem;
+    -moz-perspective: 150rem;
+    position: relative;
+    height: 30rem;
+  }
+
+  .card__side {
+    height: 30rem;
+    width: 100%;
+    transition: all 1s ease;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 8px;
+    backface-visibility: hidden;
+  }
+
+  .card__front {
+    background-color: green;
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__back {
+    transform: rotateY(180deg);
+    background: black;
+  }
+
+  .info__card:hover .card__front {
+    transform: rotateY(180deg);
+  }
+  .info__card:hover .card__back {
+    transform: rotateY(0);
+  }
+
+  /* About secion */
+  .about__explore {
+    transform: rotate(270deg);
+  }
+}
