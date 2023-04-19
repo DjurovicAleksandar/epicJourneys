@@ -7,16 +7,11 @@ import Footer from "./components/Footer";
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener("load", () => {
-      setIsLoaded(true);
-    });
-  }, []);
   return (
     <div className="bg-white/70">
       {isLoaded ? (
         <>
-          <Header />
+          <Header isLoaded={isLoaded} setIsLoaded={setIsLoaded} />
           <About />
           <Main />
           <Footer />
