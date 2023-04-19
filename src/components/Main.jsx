@@ -128,7 +128,6 @@ function Main() {
     <div id="destinations" className="container mx-auto px-10 lg:px-[100px]">
       <div className="grid grid-cols-12 2xl:grid-cols-15 gap-4 p-4">
         {destinations.map((obj, i) => {
-          console.log(obj.state);
           return (
             <div
               key={i}

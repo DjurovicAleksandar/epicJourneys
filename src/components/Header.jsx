@@ -48,14 +48,11 @@ function Header({ isLoaded, setIsLoaded }) {
   return (
     <header className="h-screen w-full text-white relative">
       <NavigationBar />
-
       <section className="relative w-full h-full">
         {videoArr.map((videoSrc, i) => {
           return (
             <video
-              onLoad={() => {
-                i === 4 && setIsLoaded(true);
-              }}
+              key={i}
               className={`header__video video__${i} ${i === 0 && "active"}`}
               src={videoSrc}
               autoPlay
@@ -71,6 +68,7 @@ function Header({ isLoaded, setIsLoaded }) {
             {headerContent.map(([title1, title2, paragraph], i) => {
               return (
                 <div
+                  key={i}
                   className={`header__content-${i} header__text hidden 2xl:mb-52 h-[18rem] md:h-[20rem] ${
                     i == 0 && "active"
                   }`}
@@ -110,6 +108,7 @@ function Header({ isLoaded, setIsLoaded }) {
             {videoArr.map((_, i) => {
               return (
                 <li
+                  key={i}
                   onClick={(e) => {
                     //Selectin all slider buttons
                     const sliderButton =

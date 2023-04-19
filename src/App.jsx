@@ -7,6 +7,11 @@ import Footer from "./components/Footer";
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 4000);
+  }, []);
   return (
     <div className="bg-white/70">
       {isLoaded ? (
