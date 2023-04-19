@@ -19,7 +19,7 @@ function InfoCard({ info }) {
       const res = await fetch(
         `https://restcountries.com/v3.1/name/${info.state}`
       );
-      // const res = await fetch(`https://restcountries.com/v3.1/name/serbia`);
+
       const data = await res.json();
 
       // console.log(data[0].currencies);
@@ -47,9 +47,11 @@ function InfoCard({ info }) {
       {/* Card side front */}
       <div className="card__side card__front ">
         <div className="relative w-full h-full rounded-lg">
-          <div className="absolute inset-0 bg-gradient-to-t from-black p-12 flex flex-col justify-between">
+          <div className="absolute inset-0 bg-gradient-to-t from-black p-12 flex flex-col justify-between rounded-md">
             <div>
-              <h2 className="lg:text-4xl font-bold">{info.destination.name}</h2>
+              <h2 className="2xl:text-4xl font-bold">
+                {info.destination.name}
+              </h2>
               <div className="h-[2px] w-[70%] border-t-[5px] border-t-primary py-1">
                 <p className="text-xs font-semibold uppercase">
                   <img

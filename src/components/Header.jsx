@@ -9,7 +9,7 @@ import video__3 from "../assets/videos/video__3.mp4";
 import video__4 from "../assets/videos/video__4.mp4";
 import video__5 from "../assets/videos/video__5.mp4";
 
-function Header({ isLoaded, setIsLoaded }) {
+function Header({ setModalType, setShowModal }) {
   const videoArr = [video__1, video__2, video__3, video__4, video__5];
   const socials = [
     [<BsLinkedin />, "https://www.linkedin.com/in/djuraleksandar/"],
@@ -47,7 +47,7 @@ function Header({ isLoaded, setIsLoaded }) {
 
   return (
     <header className="h-screen w-full text-white relative">
-      <NavigationBar />
+      <NavigationBar setModalType={setModalType} setShowModal={setShowModal} />
       <section className="relative w-full h-full">
         {videoArr.map((videoSrc, i) => {
           return (
@@ -62,14 +62,14 @@ function Header({ isLoaded, setIsLoaded }) {
           );
         })}
 
-        <div className="absolute z-40 inset-0  px-10 lg:px-[100px] py-[200px] bg-blue-900/30">
+        <div className="absolute z-40 inset-0  px-10  lg:px-[100px] py-[100px] bg-blue-900/40">
           {/* content */}
-          <div className="sm:w-1/2 2xl:mt-20">
+          <div className="sm:w-1/2  2xl:mt-20">
             {headerContent.map(([title1, title2, paragraph], i) => {
               return (
                 <div
                   key={i}
-                  className={`header__content-${i} header__text hidden 2xl:mb-52 h-[18rem] md:h-[20rem] ${
+                  className={`header__content-${i} header__text hidden 2xl:mb-52 h-[18rem] sm:h-[20rem] ${
                     i == 0 && "active"
                   }`}
                 >
@@ -83,18 +83,29 @@ function Header({ isLoaded, setIsLoaded }) {
                 </div>
               );
             })}
-            <a
-              href="#destinations"
-              className="bg-white font-bold text-primary px-4 py-2 2xl:px-8 2xl:py-4 2xl:text-xl rounded-lg button__effects"
-            >
-              Explore
-            </a>
+            <div className="flex items-center gap-4 mt-5 sm:mt-16">
+              <a
+                href="#destinations"
+                className="block border font-bold text-accent px-4 py-2 2xl:px-8 2xl:py-4 2xl:text-xl rounded-lg button__effects"
+              >
+                Explore
+              </a>
+              <button
+                className="block border font-bold text-accent px-4 py-2 2xl:px-8 2xl:py-4 2xl:text-xl rounded-lg button__effects"
+                onClick={() => {
+                  window.location.href =
+                    "mailto:djur.aleksandar@gmail.com?subject=Epic Journeys request&body=message%20goes%20here";
+                }}
+              >
+                Contact
+              </button>
+            </div>
           </div>
           {/* Social icons */}
-          <ul className="absolute top-1/2 right-10 hidden sm:block text-xs sm:text-base md:text-xl 2xl:text-4xl">
+          <ul className="absolute top-1/2 right-10 hidden sm:block text-base md:text-2xl 2xl:text-4xl">
             {socials.map(([icon, path], i) => {
               return (
-                <li key={i} className="mb-10 button__effects">
+                <li key={i} className="mb-10 button__effects text-white">
                   <a href={path} target="_blank">
                     {icon}
                   </a>

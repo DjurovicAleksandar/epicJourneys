@@ -139,6 +139,13 @@
   }
 
   /* About secion */
+  #about {
+    background: url("./assets//imgs/about/steps.jpg");
+    background-repeat: no-repeat;
+    background-position: right;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
   .about__explore {
     transform: rotate(270deg);
   }

@@ -1,13 +1,15 @@
-import React from "react";
+import compass from "../assets/imgs/about/compass.png";
+import map from "../assets/imgs/about/map.png";
+import car from "../assets/imgs/about/car.png";
 
 function About() {
   return (
     <div
       id="about"
-      className="container mx-auto px-10 lg:px-[100px] h-screen flex items-center justify-center gap-10 text-black"
+      className="container mx-auto px-10  lg:px-[100px] h-screen flex items-center justify-center lg:gap-10  text-black"
     >
       <div className="">
-        <p className="hidden lg:block about__explore text-4xl font-bold w-[20rem] uppercase border-t-[4px] border-t-primary">
+        <p className="about__explore hidden lg:block text-4xl font-bold w-[20rem] uppercase border-t-[4px] border-t-primary">
           Explore the world
         </p>
       </div>
@@ -15,7 +17,22 @@ function About() {
       <div className="relative">
         <div className="hidden lg:block h-[3px] w-[50%] bg-primary absolute right-0 top-[-1rem]"></div>
         <div className="hidden lg:block h-[3px] w-[50%] bg-primary absolute left-0 bottom-[-1rem]"></div>
-        <p className="lg:max-w-[600px] text-xs lg:text-base 2xl:text-2xl">
+        <img
+          src={compass}
+          className="hidden lg:block absolute left-[-10rem] w-[8rem]"
+          alt="compas"
+        />
+        <img
+          src={map}
+          className="hidden lg:block absolute bottom-[-3rem] left-[-5rem] w-[5rem]"
+          alt="map"
+        />
+        <img
+          src={car}
+          className="hidden lg:block absolute right-[-5rem] bottom-24 w-[8rem]"
+          alt="car"
+        />
+        <p className="lg:max-w-[600px] font-medium text-xs lg:text-base 2xl:text-2xl italic">
           Welcome to Epic Journeys, the ultimate travel destination website that
           will inspire and excite your adventurous spirit. At Epic Journeys, we
           believe that every journey is an opportunity to discover something

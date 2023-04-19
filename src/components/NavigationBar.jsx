@@ -8,11 +8,14 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 
-function NavigationBar() {
+import { auth } from "./config/firebase";
+import { logOut } from "./config/accountsFirebase";
+
+function NavigationBar({ setModalType, setShowModal }) {
   const [openNav, setOpenNav] = useState(false);
 
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ">
       <Typography
         as="li"
         variant="small"
@@ -53,7 +56,7 @@ function NavigationBar() {
     );
   }, []);
   return (
-    <Navbar className="fixed top-0 z-50 border-transparent  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 text-secondary font-medium bg-black/80 sm:bg-black/30">
+    <Navbar className="absolute top-0 z-50 border-transparent  max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 text-accent font-medium bg-black/70">
       <div className="flex items-center justify-between text-blue-gray-900">
         <div className="flex flex-col w-[3rem]">
           <img src={logo} className="mr-4 cursor-pointer" />
@@ -61,16 +64,37 @@ function NavigationBar() {
         </div>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
+          {!auth.currentUser && (
+            <Button
+              onClick={() => {
+                setModalType("Sign Up");
+                setShowModal(true);
+              }}
+              variant="gradient"
+              size="sm"
+              className="hidden lg:inline-block"
+            >
+              <span className="text-accent font-bold">Sign Up</span>
+            </Button>
+          )}
+
           <Button
             onClick={() => {
-              window.location.href =
-                "mailto:djur.aleksandar@gmail.com?subject=Epic Journeys request&body=message%20goes%20here";
+              if (auth.currentUser) {
+                logOut(auth);
+                location.reload();
+              } else {
+                setModalType("Sign In");
+                setShowModal(true);
+              }
             }}
             variant="gradient"
             size="sm"
             className="hidden lg:inline-block"
           >
-            <span className="text-accent font-bold">Contact</span>
+            <span className="text-accent font-bold">
+              {auth.currentUser ? "Log out" : "Log in"}
+            </span>
           </Button>
           <IconButton
             variant="text"
@@ -111,19 +135,42 @@ function NavigationBar() {
           </IconButton>
         </div>
       </div>
-      <MobileNav open={openNav}>
+      <MobileNav
+        className={`hidden ${openNav && "inline-block"}`}
+        open={openNav}
+      >
         {navList}
+        {!auth.currentUser && (
+          <Button
+            onClick={() => {
+              setModalType("Sign Up");
+              setShowModal(true);
+            }}
+            variant="gradient"
+            size="sm"
+            className="hidden lg:inline-block"
+          >
+            <span className="text-accent font-bold">Sign Up</span>
+          </Button>
+        )}
         <Button
           onClick={() => {
-            window.location.href =
-              "mailto:djur.aleksandar@gmail.com?subject=Epic Journeys request&body=message%20goes%20here";
+            if (auth.currentUser) {
+              logOut(auth);
+              location.reload();
+            } else {
+              setModalType("Sign In");
+              setShowModal(true);
+            }
           }}
           variant="gradient"
           size="sm"
           fullWidth
           className="mb-2"
         >
-          <span className="text-accent font-bold">Contact</span>
+          <span className="text-accent font-bold">
+            {auth.currentUser ? "Log out" : "Log in"}
+          </span>
         </Button>
       </MobileNav>
     </Navbar>
