@@ -1,28 +1,38 @@
 import { useEffect, useState } from "react";
-import bridge from "../assets/imgs/bridge.jpg";
 import {
   RiKakaoTalkLine,
   RiBuilding4Fill,
   RiCurrencyFill,
 } from "react-icons/ri";
 
-function InfoCard({ info }) {
-  console.log();
+function InfoCard({
+  state, // State where destination is located
+  destinationName, // Name of destination
+  destinationDescription, // Description of destination
+  imageUpload, // Array of image uploads
+  destinationId, // Index of destination in imageUpload array
+}) {
+  // State variables to store data from API
+
+  //Country main language
   const [lang, setLang] = useState("");
+  //Country capital
   const [capital, setCapital] = useState("");
+  //Country
   const [country, setCountry] = useState("");
+  //Country flag
   const [flag, setFlag] = useState("");
+  //Country currency
   const [currency, setCurrency] = useState([]);
 
+  // Function to fetch country data corresponding to destination
   const fetchCountry = async () => {
     try {
       const res = await fetch(
-        `https://restcountries.com/v3.1/name/${info.state}`
+        `https://restcountries.com/v3.1/name/${state.toLowerCase()}`
       );
 
       const data = await res.json();
-
-      // console.log(data[0].currencies);
 
       setLang(Object.values(data[0].languages)[0]);
       setCapital(data[0].capital[0]);
@@ -38,24 +48,24 @@ function InfoCard({ info }) {
   };
 
   useEffect(() => {
+    // useEffect hook to fetch country data when component mounts
     fetchCountry();
   }, []);
 
   return (
-    // <div className="relative card__con">
-    <div className="info__card">
+    <div className="info__card" id={destinationName}>
       {/* Card side front */}
       <div className="card__side card__front ">
         <div className="relative w-full h-full rounded-lg">
-          <div className="absolute inset-0 bg-gradient-to-t from-black p-12 flex flex-col justify-between rounded-md">
+          <div className="absolute inset-0 bg-gradient-to-r from-black p-12 flex flex-col justify-between rounded-md">
             <div>
-              <h2 className="2xl:text-4xl font-bold">
-                {info.destination.name}
+              <h2 className="text-3xl 2xl:text-4xl font-bold">
+                {destinationName}
               </h2>
-              <div className="h-[2px] w-[70%] border-t-[5px] border-t-primary py-1">
+              <div className="border-t-[3px] border-t-primary py-1 w-full">
                 <p className="text-xs font-semibold uppercase">
                   <img
-                    className="rounded-full w-5 h-5 mr-2"
+                    className="rounded-full w-5 h-5 mr-1"
                     src={flag}
                     alt={country + "flag"}
                   />
@@ -77,18 +87,38 @@ function InfoCard({ info }) {
             </div>
           </div>
           <img
-            src={
-              info.destination.img[
-                info.destination.name.split(" ").join("").toLowerCase()
-              ]
-            }
+            src={imageUpload[destinationId]}
             className="w-full h-full rounded-lg"
           />
         </div>
       </div>
       {/* Card side back */}
-      <div className="card__side card__back p-12 2xl:text-justify font-light italic flex items-center">
-        <p className="">{info.destination.description}</p>
+      <div className="card__side card__back p-12 2xl:text-justify font-light italic">
+        <div className="w-full h-full relative flex justify-center border-[1px] p-1 ">
+          <div className="absolute bottom-[-1rem] text-xs font-bold z-[200]">
+            <a
+              href={`https://www.booking.com/searchresults.html?ss="${encodeURIComponent(
+                destinationName
+              )}`}
+              target="_blank"
+              className="mr-5"
+            >
+              Booking<span className="text-primary">.com</span>
+            </a>
+            <a
+              href={`https://www.tripadvisor.com/Search?q="${encodeURIComponent(
+                destinationName
+              )}`}
+              target="_blank"
+              className=""
+            >
+              Tripadvisor<span className="text-accent">.com</span>
+            </a>
+          </div>
+          <p className="z-50 border-[1px] text-xs h-[25rem] w-[10rem] px-4 py-2 flex items-center">
+            {destinationDescription}
+          </p>
+        </div>
       </div>
     </div>
     // </div>

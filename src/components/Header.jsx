@@ -1,38 +1,57 @@
-import { useEffect, useState } from "react";
-import logo from "../assets/imgs/logo.png";
 import { BsLinkedin, BsInstagram, BsGithub } from "react-icons/bs";
 import NavigationBar from "./NavigationBar";
 
-import video__1 from "../assets/videos/video__1.mp4";
-import video__2 from "../assets/videos/video__2.mp4";
-import video__3 from "../assets/videos/video__3.mp4";
-import video__4 from "../assets/videos/video__4.mp4";
-import video__5 from "../assets/videos/video__5.mp4";
+import video__1 from "../assets/videos/video__2.mp4";
+import video__2 from "../assets/videos/video__4.mp4";
+import video__3 from "../assets/videos/video__5.mp4";
 
-function Header({ setModalType, setShowModal }) {
-  const videoArr = [video__1, video__2, video__3, video__4, video__5];
+function Header({ setModalType, setShowModal, setShowItemModal }) {
+  // Declared an array of video assets
+  const videoArr = [video__1, video__2, video__3];
+  // Declared an array of social media links and their icons
   const socials = [
     [<BsLinkedin />, "https://www.linkedin.com/in/djuraleksandar/"],
     [<BsInstagram />, "https://www.instagram.com/nekultivisan/"],
     [<BsGithub />, "https://github.com/DjurovicAleksandar?tab=repositories"],
   ];
 
+  const sliderLogicHandler = (e, i) => {
+    // Get all the slider buttons
+    const sliderButton = document.querySelectorAll(".slider__button");
+    // Get all the slider videos
+    const headerVideo = document.querySelectorAll(".header__video");
+    // Get all the header content text
+    const headerText = document.querySelectorAll(".header__text");
+
+    // Remove 'active' class from all slider buttons, videos, and text
+    sliderButton.forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    //
+    headerVideo.forEach((headerVideo) => {
+      headerVideo.classList.remove("active");
+    });
+    //
+    headerText.forEach((headerContent) => {
+      headerContent.classList.remove("active");
+    });
+
+    // Add 'active' class to the clicked slider button, corresponding slider video, and header text
+    e.target.classList.add("active");
+    //
+    document.querySelector(`.video__${i}`).classList.add("active");
+    //
+    document.querySelector(`.header__content-${i}`).classList.add("active");
+  };
+
+  // Declared an array of header content text
   const headerContent = [
-    [
-      "Sun, Sand, and Surf:",
-      "Island Getaway",
-      "Indulge in pure bliss with an island getaway. Relax on pristine sandy beaches, swim in crystal-clear turquoise waters, and bask in the warm tropical sun. Immerse yourself in the local culture, savor delicious cuisine, and create unforgettable moments in paradise.",
-    ],
     [
       "Find Serenity:",
       "Mountatin Retreat",
       "Escape to the tranquil beauty of the mountains with a serene mountain retreat. Breathe in crisp alpine air, hike through majestic trails, and marvel at panoramic vistas. Unwind in cozy lodges, immerse in local culture, and experience the peace and serenity of the mountains.",
     ],
-    [
-      "Immerse in Rich Heritage:",
-      "Cultural Immersion",
-      "Dive into the fascinating world of culture with a immersive travel experience. Immerse in local traditions, visit historical landmarks, and engage with local communities. Discover the rich heritage, customs, and cuisine of a destination, and gain a deeper understanding of its people and history.",
-    ],
+
     [
       "City Adventure:",
       "Urban Excursion",
@@ -47,7 +66,12 @@ function Header({ setModalType, setShowModal }) {
 
   return (
     <header className="h-screen w-full text-white relative">
-      <NavigationBar setModalType={setModalType} setShowModal={setShowModal} />
+      {/* Render the navigation bar */}
+      <NavigationBar
+        setShowItemModal={setShowItemModal}
+        setModalType={setModalType}
+        setShowModal={setShowModal}
+      />
       <section className="relative w-full h-full">
         {videoArr.map((videoSrc, i) => {
           return (
@@ -62,7 +86,7 @@ function Header({ setModalType, setShowModal }) {
           );
         })}
 
-        <div className="absolute z-40 inset-0  px-10  lg:px-[100px] py-[100px] bg-blue-900/40">
+        <div className="absolute z-40 inset-0  px-10  lg:px-[100px] py-[100px] bg-gradient-to-r from-black">
           {/* content */}
           <div className="sm:w-1/2  2xl:mt-20">
             {headerContent.map(([title1, title2, paragraph], i) => {
@@ -120,41 +144,7 @@ function Header({ setModalType, setShowModal }) {
               return (
                 <li
                   key={i}
-                  onClick={(e) => {
-                    //Selectin all slider buttons
-                    const sliderButton =
-                      document.querySelectorAll(".slider__button");
-                    //Selectin all slider videos
-                    const headerVideo =
-                      document.querySelectorAll(".header__video");
-                    //Selectin all header content text
-                    const headerText =
-                      document.querySelectorAll(".header__text");
-
-                    //Remove class active from slider button
-                    sliderButton.forEach((btn) => {
-                      btn.classList.remove("active");
-                    });
-                    //Removing class active from slider video
-                    headerVideo.forEach((headerVideo) => {
-                      headerVideo.classList.remove("active");
-                    });
-                    //Removing class active from header text
-                    headerText.forEach((headerContent) => {
-                      headerContent.classList.remove("active");
-                    });
-
-                    //Setting ACTIVE class on a slider icon
-                    e.target.classList.add("active");
-                    //Setting ACTIVE class on a header video
-                    document
-                      .querySelector(`.video__${i}`)
-                      .classList.add("active");
-                    //Setting ACTIVE class on a header text
-                    document
-                      .querySelector(`.header__content-${i}`)
-                      .classList.add("active");
-                  }}
+                  onClick={(e) => sliderLogicHandler(e, i)}
                   className={`slider__button bg-white w-2 h-2 rounded-full button__effects ${
                     i === 0 && "active"
                   }`}

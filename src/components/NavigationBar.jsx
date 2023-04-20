@@ -11,7 +11,7 @@ import {
 import { auth } from "./config/firebase";
 import { logOut } from "./config/accountsFirebase";
 
-function NavigationBar({ setModalType, setShowModal }) {
+function NavigationBar({ setModalType, setShowModal, setShowItemModal }) {
   const [openNav, setOpenNav] = useState(false);
 
   const navList = (
@@ -64,17 +64,14 @@ function NavigationBar({ setModalType, setShowModal }) {
         </div>
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
-          {!auth.currentUser && (
+          {auth.currentUser?.email === "admin@epicjourneys.com" && (
             <Button
-              onClick={() => {
-                setModalType("Sign Up");
-                setShowModal(true);
-              }}
+              onClick={(e) => setShowItemModal(true)}
               variant="gradient"
               size="sm"
               className="hidden lg:inline-block"
             >
-              <span className="text-accent font-bold">Sign Up</span>
+              <span className="text-accent font-bold">Add destination</span>
             </Button>
           )}
 
@@ -95,6 +92,18 @@ function NavigationBar({ setModalType, setShowModal }) {
             <span className="text-accent font-bold">
               {auth.currentUser ? "Log out" : "Log in"}
             </span>
+          </Button>
+          <Button
+            onClick={() => {
+              alert(
+                "Welcome to website! Website is built using React, Tailwind, Vite, and Firebase, including Firestore and Storage, as well as the restCountries API. As an admin, you can log in using the login button and access the option to add a new destination. * Login email : admin@epicjourneys.com; *Login password: adminadmin"
+              );
+            }}
+            variant="gradient"
+            size="sm"
+            className="hidden lg:inline-block"
+          >
+            <span className="text-secondary font-bold">Help</span>
           </Button>
           <IconButton
             variant="text"
@@ -140,19 +149,18 @@ function NavigationBar({ setModalType, setShowModal }) {
         open={openNav}
       >
         {navList}
-        {!auth.currentUser && (
+        {auth.currentUser?.email === "admin@epicjourneys.com" && (
           <Button
-            onClick={() => {
-              setModalType("Sign Up");
-              setShowModal(true);
-            }}
+            onClick={() => setShowModal(true)}
             variant="gradient"
             size="sm"
-            className="hidden lg:inline-block"
+            fullWidth
+            className="mb-2"
           >
-            <span className="text-accent font-bold">Sign Up</span>
+            <span className="text-accent font-bold">Add destinaion</span>
           </Button>
         )}
+
         <Button
           onClick={() => {
             if (auth.currentUser) {
@@ -171,6 +179,19 @@ function NavigationBar({ setModalType, setShowModal }) {
           <span className="text-accent font-bold">
             {auth.currentUser ? "Log out" : "Log in"}
           </span>
+        </Button>
+        <Button
+          onClick={() => {
+            alert(
+              "Welcome to website! Website is built using React, Tailwind, Vite, and Firebase, including Firestore and Storage, as well as the restCountries API. As an admin, you can log in using the login button and access the option to add a new destination. * Login email : admin@epicjourneys.com; *Login password: adminadmin"
+            );
+          }}
+          variant="gradient"
+          size="sm"
+          fullWidth
+          className="mb-2"
+        >
+          <span className="text-secondary font-bold">Help</span>
         </Button>
       </MobileNav>
     </Navbar>
