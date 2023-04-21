@@ -32,10 +32,15 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
     [<BsGithub />, "https://github.com/DjurovicAleksandar?tab=repositories"],
   ];
 
-  const sliderLogicHandler = (e, i) => {
-    if (isActive !== i) {
-      setIsActive(i);
+  //handle video autoPlay
+  const handleVideoClick = (index) => {
+    if (isActive !== index) {
+      setIsActive(index);
     }
+  };
+
+  const sliderLogicHandler = (e, i) => {
+    handleVideoClick(i);
   };
 
   // Declared an array of header content text
@@ -58,10 +63,6 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
     ],
   ];
 
-  // useEffect(() => {
-  //   setIsActive(0);
-  // }, []);
-
   return (
     <header className="h-screen w-full text-white relative">
       {/* Render the navigation bar */}
@@ -72,12 +73,13 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
       />
       <section className="relative w-full h-full">
         {videoArr.map((video, i) => {
+          console.log(isActive === i);
           return (
             <video
               key={i}
               className={video.className}
               src={video.src}
-              autoPlay={isActive === i}
+              autoPlay
               muted
               loop
             />
