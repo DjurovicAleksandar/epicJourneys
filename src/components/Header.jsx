@@ -4,10 +4,27 @@ import NavigationBar from "./NavigationBar";
 import video__1 from "../assets/videos/video__2.mp4";
 import video__2 from "../assets/videos/video__4.mp4";
 import video__3 from "../assets/videos/video__5.mp4";
+import { useEffect, useState } from "react";
 
 function Header({ setModalType, setShowModal, setShowItemModal }) {
+  //State variable
+  const [isActive, setIsActive] = useState(0);
   // Declared an array of video assets
-  const videoArr = [video__1, video__2, video__3];
+  // const videoArr = [video__1, video__2, video__3];
+  const videoArr = [
+    {
+      src: video__1,
+      className: `header__video video__1 ${isActive === 0 && "active"}`,
+    },
+    {
+      src: video__2,
+      className: `header__video video__2 ${isActive === 1 && "active"}`,
+    },
+    {
+      src: video__3,
+      className: `header__video video__3 ${isActive === 2 && "active"}`,
+    },
+  ];
   // Declared an array of social media links and their icons
   const socials = [
     [<BsLinkedin />, "https://www.linkedin.com/in/djuraleksandar/"],
@@ -16,32 +33,9 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
   ];
 
   const sliderLogicHandler = (e, i) => {
-    // Get all the slider buttons
-    const sliderButton = document.querySelectorAll(".slider__button");
-    // Get all the slider videos
-    const headerVideo = document.querySelectorAll(".header__video");
-    // Get all the header content text
-    const headerText = document.querySelectorAll(".header__text");
-
-    // Remove 'active' class from all slider buttons, videos, and text
-    sliderButton.forEach((btn) => {
-      btn.classList.remove("active");
-    });
-    //
-    headerVideo.forEach((headerVideo) => {
-      headerVideo.classList.remove("active");
-    });
-    //
-    headerText.forEach((headerContent) => {
-      headerContent.classList.remove("active");
-    });
-
-    // Add 'active' class to the clicked slider button, corresponding slider video, and header text
-    e.target.classList.add("active");
-    //
-    document.querySelector(`.video__${i}`).classList.add("active");
-    //
-    document.querySelector(`.header__content-${i}`).classList.add("active");
+    if (isActive !== i) {
+      setIsActive(i);
+    }
   };
 
   // Declared an array of header content text
@@ -64,6 +58,10 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
     ],
   ];
 
+  // useEffect(() => {
+  //   setIsActive(0);
+  // }, []);
+
   return (
     <header className="h-screen w-full text-white relative">
       {/* Render the navigation bar */}
@@ -73,13 +71,13 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
         setShowModal={setShowModal}
       />
       <section className="relative w-full h-full">
-        {videoArr.map((videoSrc, i) => {
+        {videoArr.map((video, i) => {
           return (
             <video
               key={i}
-              className={`header__video video__${i} ${i === 0 && "active"}`}
-              src={videoSrc}
-              autoPlay
+              className={video.className}
+              src={video.src}
+              autoPlay={isActive === i}
               muted
               loop
             />
@@ -94,7 +92,7 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
                 <div
                   key={i}
                   className={`header__content-${i} header__text hidden 2xl:mb-52 h-[18rem] sm:h-[20rem] ${
-                    i == 0 && "active"
+                    isActive === i && "active"
                   }`}
                 >
                   <h1 className="uppercase font-bold text-2xl sm:text-4xl 2xl:text-7xl lg:tracking-widest lg:leading-10 mb-10">
@@ -146,7 +144,7 @@ function Header({ setModalType, setShowModal, setShowItemModal }) {
                   key={i}
                   onClick={(e) => sliderLogicHandler(e, i)}
                   className={`slider__button bg-white w-2 h-2 rounded-full button__effects ${
-                    i === 0 && "active"
+                    isActive === i && "active"
                   }`}
                 >
                   &nbsp;
